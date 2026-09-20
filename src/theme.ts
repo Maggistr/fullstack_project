@@ -35,12 +35,45 @@ export const theme = createTheme({
     fontWeight: '600',
   },
   defaultRadius: 'md',
+  fontSizes: {
+    xs: '0.75rem',
+    sm: '0.875rem',
+    md: '0.95rem',
+    lg: '1.1rem',
+    xl: '1.25rem',
+  },
+  lineHeights: {
+    md: '1.6',
+  },
   components: {
     Card: {
       defaultProps: { withBorder: true, shadow: 'none' },
+      styles: {
+        root: {
+          '--card-bg': 'light-dark(#ffffff, #1e1e2e)',
+        },
+      },
     },
     Button: {
       defaultProps: { radius: 'md' },
+    },
+    AppShell: {
+      styles: {
+        navbar: {
+          '--app-shell-navbar-bg': 'light-dark(#f8f9fa, #141420)',
+        },
+        header: {
+          '--app-shell-header-bg': 'light-dark(#ffffff, #1a1a2e)',
+          borderBottom: '1px solid light-dark(#e9ecef, #2d2d44)',
+        },
+      },
+    },
+    NavLink: {
+      styles: {
+        root: {
+          borderRadius: '8px',
+        },
+      },
     },
   },
 });
