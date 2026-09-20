@@ -1,75 +1,94 @@
-# React + TypeScript + Vite
+# Протокол — веб-приложение для протоколов собраний
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Учебный проект курса «Fullstack разработка». Приложение помогает командам
+готовить повестку собрания, фиксировать принятые решения и задачи с дедлайнами,
+а также получать конспект обсуждения из аудиозаписи.
 
-Currently, two official plugins are available:
+**Текущий этап: лабораторная работа №1** — интерфейс и каркас frontend.
+Backend ещё не подключён, все данные демонстрационные и лежат в `src/mocks/data.ts`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Назначение
 
-## React Compiler
+Решения, принятые на совещании, обычно теряются: кто-то записал в блокнот,
+кто-то в чат, через неделю никто не помнит кто за что отвечал. Приложение
+хранит собрание целиком — повестку, участников, решения, задачи и запись —
+и связывает эти сущности между собой, чтобы по любой задаче можно было
+вернуться к обсуждению, из которого она появилась.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Пользовательские сценарии
 
-## Expanding the ESLint configuration
+1. **Подготовить собрание.** Организатор создаёт собрание, указывает дату,
+   место и участников, заранее раскладывает повестку по пунктам с докладчиками
+   и таймингом.
+2. **Посмотреть что впереди.** Участник открывает обзор и видит ближайшие
+   собрания, свои задачи с приближающимися сроками и последние решения.
+3. **Зафиксировать итоги.** После собрания в его карточке появляются решения
+   по пунктам повестки и задачи с ответственными и дедлайнами.
+4. **Разобрать аудиозапись.** Пользователь загружает запись или вставляет
+   заметки и получает черновик конспекта, список решений и задач.
+5. **Следить за исполнением.** Задачи из всех собраний собираются в один
+   список с фильтрами по статусу и подсветкой просроченных сроков.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Экраны
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Маршрут | Экран | Назначение |
+|---|---|---|
+| `/login` | Вход | Форма входа, в ЛР №1 без реальной авторизации |
+| `/` | Обзор | Ближайшие собрания, срочные задачи, последние решения |
+| `/meetings` | Собрания | Список с поиском и фильтром по статусу |
+| `/meetings/new` | Новое собрание | Форма планирования, редактор повестки |
+| `/meetings/:id` | Карточка собрания | Вкладки: повестка, решения, задачи, запись |
+| `/tasks` | Задачи | Список задач всех собраний, фильтры, отметка выполнения |
+| `/summarize` | Разбор записи | Загрузка аудио или заметок, черновик конспекта |
+| `/settings` | Настройки | Профиль и уведомления |
+| `*` | 404 | Заглушка для несуществующего адреса |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Скриншоты экранов — в каталоге [`docs/screenshots`](docs/screenshots).
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Стек
 
+- React 18 + TypeScript
+- Vite — сборка и dev-сервер
+- React Router 6 — клиентская маршрутизация
+- [Mantine 7](https://mantine.dev/) — библиотека UI-компонентов
+- Tabler Icons — иконки
+- dayjs — форматирование дат
+
+В следующих работах добавятся FastAPI, PostgreSQL и SQLAlchemy.
+
+## Запуск
+
+Нужен Node.js 18 или новее.
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Приложение откроется на http://localhost:5173.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Другие команды:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build    # production-сборка в dist/
+npm run preview  # просмотр собранной версии
+npm run lint     # проверка кода ESLint
+```
+
+## Структура проекта
 
 ```
+src/
+├── components/ переиспользуемые компоненты
+├── lib/ форматирование дат и дедлайнов
+├── mocks/ демонстрационные данные
+├── pages/ по одному файлу на экран
+├── types/ доменные типы
+├── theme.ts тема Mantine
+├── App.tsx маршруты
+└── main.tsx точка входа
+```
+
+## История изменений
+
+- **ЛР №1.** Первая версия всех экранов на демонстрационных данных.
