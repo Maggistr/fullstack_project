@@ -86,7 +86,7 @@ export function SummarizePage() {
               label: `${m.title} — ${formatDateTime(m.startsAt)}`,
             }))}
             value={meetingId}
-            onChange={setMeetingId}
+            onChange={(value) => setMeetingId(typeof value === 'string' ? value : null)}
           />
           <FileInput
             label="Аудиозапись"
