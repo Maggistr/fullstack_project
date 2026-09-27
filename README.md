@@ -47,10 +47,10 @@ Backend ещё не подключён, все данные демонстрац
 
 ## Стек
 
-- React 18 + TypeScript
+- React 19 + TypeScript
 - Vite — сборка и dev-сервер
-- React Router 6 — клиентская маршрутизация
-- [Mantine 7](https://mantine.dev/) — библиотека UI-компонентов
+- React Router 7 — клиентская маршрутизация
+- [Mantine 9](https://mantine.dev/) — библиотека UI-компонентов
 - Tabler Icons — иконки
 - dayjs — форматирование дат
 
